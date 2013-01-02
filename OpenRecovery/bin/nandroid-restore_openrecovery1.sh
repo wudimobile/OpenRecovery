@@ -31,7 +31,7 @@ ERROR=""
 
 echo "+----------------------------------------------+"
 echo "+                                              +"
-echo "+        Open Recovery Nandroid Restore        +"
+echo "+                   恢复模式                   +"
 echo "+                                              +"
 echo "+----------------------------------------------+"
 sleep 2
@@ -116,7 +116,7 @@ else
 fi
 
 if [ $NOTHING -eq 1 ]; then
-	echo "E:There is nothing to restore."
+	echo "E:未执行操作"
 	exit 1
 fi
 
@@ -129,7 +129,7 @@ erase_image=`which erase_image`
 if [ "$erase_image" == "" ]; then
 	erase_image=`which erase_image-or`
 	if [ "$erase_image" == "" ]; then
-		echo "E:erase_image or erase_image-or not found in path."
+		echo "E:未找到 erase_image 或 erase_image-or."
 		exit 1
 	fi
 fi
@@ -138,7 +138,7 @@ flash_image=`which flash_image`
 if [ "$flash_image" == "" ]; then
 	flash_image=`which flash_image-or`
 	if [ "$flash_image" == "" ]; then
-		echo "E:flash_image or flash_image-or not found in path."
+		echo "E:未找到 flash_image 或 flash_image-or."
 		exit 1
 	fi
 fi
@@ -147,7 +147,7 @@ unyaffs=`which unyaffs`
 if [ "$unyaffs" == "" ]; then
 	unyaffs=`which unyaffs-or`
 	if [ "$unyaffs" == "" ]; then
-		echo "E:unyaffs or unyaffs-or not found in path."
+		echo "E:未找到 unyaffs 或 unyaffs-or."
 		exit 1
 	fi
 fi
@@ -160,7 +160,7 @@ if [ "$COMPRESS" == 1 ]; then
 		ENERGY=100
 	fi
 	if [ ! $ENERGY -ge 30 ]; then
-		echo "E:Not enough battery power to perform compression."      
+		echo "E: 电量不足"      
 		exit 1
 	fi
 fi
@@ -175,15 +175,15 @@ CWD=$PWD
 cd "$RESTOREPATH"
 
 if [ `ls *.bz2 2>/dev/null|wc -l` -ge 1 ]; then
-	echo "This backup is compressed."
+	echo "此备份包为压缩存储"
 	COMPRESSED=1
 	
 	if [ $FREEBLOCKS -le 262144 ]; then
-		echo "E:Not enough free space available on sdcard for decompression operation (need 256 MiB)."
+		echo "E: 没有足够的空间来解压备份包(至少需要 256MB 空间)"
 		cd $CWD
 		exit 1
 	else
-		echo "There is at least 256 MiB on the sdcard."
+		echo "请确认 SD 卡上至少有 256MB 或更大的空间."
 	fi
 fi
 
@@ -201,42 +201,42 @@ fi
 
 for image in boot bpsw lbl logo devtree; do
 	if [ ! -f $image.img* ]; then
-		echo "${image}: Not backed up."
+		echo "${image}: 无法执行备份."
 		continue
 	fi
 	
 	case $image in
 		boot)
 			if [ $REST_BOOT -eq 0 ]; then
-				echo "boot: Skipping."
+				echo "内核(boot): 已跳过."
 				continue
 			fi
 			;;
 			
 		bpsw)
 			if [ $REST_BPSW -eq 0 ]; then
-				echo "bpsw: Skipping."
+				echo "基带(bpsw): 已跳过."
 				continue
 			fi
 			;;
 			
 		lbl)
 			if [ $REST_LBL -eq 0 ]; then
-				echo "lbl: Skipping."
+				echo "引导(lbl): 已跳过."
 				continue
 			fi
 			;;
 			
 		logo)
 			if [ $REST_LOGO -eq 0 ]; then
-				echo "logo: Skipping."
+				echo "标志(logo): 已跳过."
 				continue
 			fi
 			;;
 			
 		devtree)
 			if [ $REST_DEVTREE -eq 0 ]; then
-				echo "devtree: Skipping."
+				echo "devtree: 已跳过."
 				continue
 			fi
 			;;
@@ -245,15 +245,15 @@ for image in boot bpsw lbl logo devtree; do
 	if [ $OPEN_RCVR_BKP -eq 1 ]; then  
 	
 		if [ $COMPRESSED -eq 1 ]; then
-			echo -n "${image}: Decompressing..."
+			echo -n "${image}: 正在解压..."
 			bunzip2 -c $image.img.bz2 > $image.img
-			echo "done"
+			echo "完成"
 		fi
 	fi
 	
-	echo -n "${image}: Restoring..."
+	echo -n "${image}: 正在恢复..."
 	$flash_image $image $image.img > /dev/null 2> /dev/null
-	echo "done"
+	echo "完成"
 	
 	if [ $COMPRESSED -eq 1 ]; then
 		#delete the uncompressed part
@@ -268,42 +268,42 @@ done
 
 for image in system data cache cust cdrom; do
 	if [ ! -f $image.img* ]; then
-		echo "${image}: Not backed up."
+		echo "${image}: 无法执行备份."
 		continue
 	fi
 	
 	case $image in
 		system)
 			if [ $REST_SYSTEM -eq 0 ]; then
-				echo "system: Skipping."
+				echo "系统(system): 已跳过."
 				continue
 			fi
 		  ;;
 	    
 		data)
 			if [ $REST_DATA -eq 0 ]; then
-				echo "data: Skipping."
+				echo "数据(data): 已跳过."
 				continue
 			fi
 			;;
 	    
 		cache)
 			if [ $REST_CACHE -eq 0 ]; then
-				echo "cache: Skipping."
+				echo "缓存(cache): 已跳过."
 				continue
 			fi
 			;;
 	
 		cust)
 			if [ $REST_CUST -eq 0 ]; then
-				echo "cust: Skipping ."
+				echo "cust: 已跳过."
 				continue
 			fi
 			;;
 	
 		cdrom)
 			if [ $REST_CDROM -eq 0 ]; then
-				echo "cdrom: Skipping."
+				echo "CD-Rom: 已跳过."
 				continue
 			fi
 			;;
@@ -313,24 +313,24 @@ for image in system data cache cust cdrom; do
 	mount /$image 2> /dev/null
 	
 	if [ $? -ne 0 ]; then
-		echo "E:Cannot mount properly /$image."
-		echo "${image}: Cannot restore."
-		ERROR="${ERROR}${image}: Failed to mount.\n"
+		echo "E:无法挂载 /$image."
+		echo "${image}: 无法恢复."
+		ERROR="${ERROR}${image}: 挂载失败.\n"
 		continue
 	fi
 	
 	if [ $OPEN_RCVR_BKP -eq 1 ]; then  
 	
 		if [ $COMPRESSED -eq 1 ]; then
-			echo -n "${image}: Decompressing..."
+			echo -n "${image}: 正在解压..."
 			bunzip2 -c $image.img.bz2 > $image.img
-			echo "done"
+			echo "完成"
 		fi
 	fi
 	
 	if [ "$image" == "system" ]; then
 		if [ -d /system/persistent ]; then
-			echo -n "${image}: Backing up persistent data..."
+			echo -n "${image}: 正在备份..."
 			
 			mkdir /system_persistent > /dev/null
 			cp -a /system/persistent /system_persistent > /dev/null
@@ -340,12 +340,12 @@ for image in system data cache cust cdrom; do
 				cp -a /system/bin/sh /system_persistent/sh > /dev/null
 			fi
 			
-			echo "done"
+			echo "完成"
 		fi
 	fi
 	
 	umount /$image 2> /dev/null
-	echo -n "${image}: Erasing..."
+	echo -n "${image}: 正在删除..."
 	
 	if [ "$image" == "data" ]; then
 		my_image="userdata"
@@ -354,15 +354,15 @@ for image in system data cache cust cdrom; do
 	fi
 		
 	$erase_image $my_image > /dev/null 2> /dev/null
-	echo "done"
+	echo "完成"
 	mount /$image
-	echo -n "${image}: Restoring..."
+	echo -n "${image}: 正在恢复..."
 	$unyaffs $image.img /$image	> /dev/null 2> /dev/null
-	echo "done"
+	echo "完成"
 	
 	if [ "$image" == "system" ]; then
 		if [ -d /system_persistent ]; then
-			echo -n "${image}: Restoring persistent data..."
+			echo -n "${image}: 正在恢复..."
 			
 			if [ -d /system/persistent ]; then
 				rm -r /system/persistent > /dev/null
@@ -378,7 +378,7 @@ for image in system data cache cust cdrom; do
 			
 			rm -r /system_persistent > /dev/null
 			
-			echo "done"
+			echo "完成"
 		fi
 	fi
 	
@@ -394,31 +394,61 @@ done
 #===============================================================================
 
 if [ ! -f ext2.tar ]; then
-	echo "ext2: Not backed up."
+	echo "SD 卡分区(ext2): 无法执行备份."
 else 
 	if [ $REST_EXT2 -eq 0 ]; then
-		echo "ext2: Skipping."
+		echo "SD 卡分区(ext2): 已跳过."
 	elif [ ! -d /sddata ]; then
-		echo "E: ext2 partition does not exist"
-		echo "ext2: Cannot restore."
-		ERROR="${ERROR}ext2: Attempted to restore non-existing partition.\n"
+		echo "E: 未找到 SD 卡分区(ext2)"
+		echo "SD 卡分区(ext2): 无法恢复."
+		ERROR="${ERROR}SD 卡分区(ext2): 无法恢复不存在的分区.\n"
 	else	
-		echo -n "ext2: Erasing..."
-		umount /sddata 2> /dev/null
-		mkfs.ext2 -c /dev/block/mmcblk0p2 > /dev/null
-		echo "done"
-		
-		echo -n "ext2: Restoring..."
-		mount /sddata
-		CW2=$PWD
-		cd /sddata
-		tar -xvf $RESTOREPATH/ext2.tar ./ > /dev/null
-		cd "$CW2"
-		echo "done"
-		
-		if [ $COMPRESSED -eq 1 ]; then
-			#delete the uncompressed part
-			rm ext2.tar
+		if [ ! -f ext2.md5 ]; then
+			echo "未找到 SD 卡分区(ext2)校验文件, 已跳过."		
+			
+			if [ $COMPRESSED -eq 1 ]; then
+				#delete the uncompressed part
+				rm ext2.tar
+			fi
+			
+			ERROR="${ERROR}SD 卡分区(ext2): 未发现 MD5 校验文件.\n"
+			
+		else
+					
+			echo -n "SD 卡分区(ext2): 正在校验 MD5..."
+			md5sum -c ext2.md5 > /dev/null
+			
+			if [ $? -eq 1 ]; then
+				echo "校验失败"
+				echo "SD 卡分区(ext2)校验值不匹配, 已跳过."
+				
+				if [ $COMPRESSED -eq 1 ]; then
+					#delete the uncompressed part
+					rm ext2.tar
+				fi
+				
+				ERROR="${ERROR}SD 卡分区(ext2): MD5 值不匹配.\n"
+				
+			else
+				echo "完成"
+				echo -n "SD 卡分区(ext2): 正在删除..."
+				umount /sddata 2> /dev/null
+				mkfs.ext2 -c /dev/block/mmcblk0p2 > /dev/null
+				echo "完成"
+				
+				echo -n "SD 卡分区(ext2): 正在恢复..."
+				mount /sddata
+				CW2=$PWD
+				cd /sddata
+				tar -xvf $RESTOREPATH/ext2.tar ./ > /dev/null
+				cd "$CW2"
+				echo "完成"
+				
+				if [ $COMPRESSED -eq 1 ]; then
+					#delete the uncompressed part
+					rm ext2.tar
+				fi
+			fi
 		fi
 	fi
 fi
@@ -431,14 +461,14 @@ cd "$CWD"
 if [ "$ERROR" != "" ]; then
 	echo "+----------------------------------------------+"
 	echo "+                                              +"
-	echo "+           ERROR IN NANDROID RESTORE          +"
+	echo "+                 恢复中的错误                 +"
 	echo "+                                              +"
 	echo "+----------------------------------------------+"
 	
 	printf "$ERROR"
 	
 else
-	echo "Restoring finished successfully."
+	echo "恢复成功."
 	
 	if [ $REBOOT -eq 1 ]; then
 		reboot

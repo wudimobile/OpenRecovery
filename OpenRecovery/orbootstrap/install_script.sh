@@ -1,12 +1,12 @@
-#!/system/bin/sh
+﻿#!/system/bin/sh
 
 if [ ! -f /sdcard/openrecovery/sbin/busybox ]; then
-	echo "Cannot find busybox - sdcard part of OpenRecovery not installed."
+	echo "未找到 busybox（未安装 SD 卡中的恢复系统）."
 	exit 2
 fi
 
 if [ ! -d "/sdcard/openrecovery/orbootstrap/$1" ]; then
-	echo "Cannot find bootstrap part - not installed."
+	echo "未找到引导程序（未安装）."
 	exit 2
 fi
 
@@ -19,7 +19,7 @@ chmod 777 $BUSYBOX
 
 if $BUSYBOX [ "$1" == "" ]; then
 	$BUSYBOX rm $BUSYBOX
-	echo "No phone specified."
+	echo "没有指定电话."
 	exit 2
 fi
 
@@ -85,4 +85,4 @@ fi
 #delete /tmp/busybox
 $BUSYBOX rm $BUSYBOX
 
-echo "Installation done."
+echo "安装完成."
