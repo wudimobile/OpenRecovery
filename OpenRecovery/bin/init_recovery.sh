@@ -83,8 +83,10 @@ MAIN_MENU_FILE=/menu/init.menu
 
 echo "主菜单" > "$MAIN_MENU_FILE"
 echo "重启手机:reboot:*" >> "$MAIN_MENU_FILE"
+echo "关闭手机:shell:halt.sh" >> "$MAIN_MENU_FILE"
 echo "设置:menu:settings.menu" >> "$MAIN_MENU_FILE"
 echo "USB大容量存储模式:shell:usb_mass_storage.sh" >> "$MAIN_MENU_FILE"
+echo "USB大容量存储模式(完全访问):shell:usb_mass_storage_complete_access.sh" >> "$MAIN_MENU_FILE"
 
 echo "Nandroid备份还原:menu:nand.menu" >> "$MAIN_MENU_FILE"
 echo "程序菜单:menu:app.menu" >> "$MAIN_MENU_FILE"
@@ -99,5 +101,6 @@ echo "安装升级包:scripted_menu:customupdate.menu:menu_updates.sh" >> "$MAIN
 echo "清除Dalvik缓存:shell:wipe_dalvik_cache.sh" >> "$MAIN_MENU_FILE"
 echo "删除全部用户数据/恢复出厂设置:wipe_data:*" >> "$MAIN_MENU_FILE"
 echo "清除缓存:wipe_cache:*" >> "$MAIN_MENU_FILE"
+echo "电池状态:scripted_menu:battery.menu:menu_battery.sh" >> "$MAIN_MENU_FILE"
 
-echo "完毕。"
+echo "完毕"

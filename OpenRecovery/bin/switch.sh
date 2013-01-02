@@ -140,6 +140,10 @@ chmod 0755 ${ROOT}sbin/usbd
 cp -f /sdcard/OpenRecovery/sbin/battd ${ROOT}sbin/battd
 chmod 0755 ${ROOT}sbin/battd
 
+cp -f /sdcard/OpenRecovery/sbin/linker ${ROOT}sbin/linker
+chmod 0755 ${ROOT}sbin/linker
+
+
 #Nandroid
 cp -f /sdcard/OpenRecovery/sbin/dump_image-or ${ROOT}sbin/dump_image-or
 chmod 0755 ${ROOT}sbin/dump_image-or

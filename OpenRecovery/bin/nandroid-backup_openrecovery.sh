@@ -119,7 +119,7 @@ else
 fi
 
 if [ $NOTHING -eq 1 ]; then
-	echo "E:没什么要做的。"
+	echo "E:没什么要做的"
 	exit 1
 fi
 
