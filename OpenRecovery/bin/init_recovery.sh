@@ -84,6 +84,8 @@ MAIN_MENU_FILE=/menu/init.menu
 echo "主菜单" > "$MAIN_MENU_FILE"
 echo "重启手机:reboot:*" >> "$MAIN_MENU_FILE"
 echo "关闭手机:shell:halt.sh" >> "$MAIN_MENU_FILE"
+echo "重启到Bootloader:shell:reboot-btl.sh" >> "$MAIN_MENU_FILE"
+echo "重启Recovery:shell:reboot-rcvr.sh" >> "$MAIN_MENU_FILE"
 echo "设置:menu:settings.menu" >> "$MAIN_MENU_FILE"
 echo "USB大容量存储模式:shell:usb_mass_storage.sh" >> "$MAIN_MENU_FILE"
 echo "USB大容量存储模式(完全访问):shell:usb_mass_storage_complete_access.sh" >> "$MAIN_MENU_FILE"
