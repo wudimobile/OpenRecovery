@@ -403,52 +403,22 @@ else
 		echo "ext2: Cannot restore."
 		ERROR="${ERROR}ext2: Attempted to restore non-existing partition.\n"
 	else	
-		if [ ! -f ext2.md5 ]; then
-			echo "Partition ext2 checksum file missing, skipping."		
-			
-			if [ $COMPRESSED -eq 1 ]; then
-				#delete the uncompressed part
-				rm ext2.tar
-			fi
-			
-			ERROR="${ERROR}ext2: MD5 checksum file missing.\n"
-			
-		else
-					
-			echo -n "ext2: Verifying MD5..."
-			md5sum -c ext2.md5 > /dev/null
-			
-			if [ $? -eq 1 ]; then
-				echo "failed"
-				echo "Partition ext2 checksum mismatch, skipping."
-				
-				if [ $COMPRESSED -eq 1 ]; then
-					#delete the uncompressed part
-					rm ext2.tar
-				fi
-				
-				ERROR="${ERROR}ext2: MD5 checksum mismatch.\n"
-				
-			else
-				echo "done"
-				echo -n "ext2: Erasing..."
-				umount /sddata 2> /dev/null
-				mkfs.ext2 -c /dev/block/mmcblk0p2 > /dev/null
-				echo "done"
-				
-				echo -n "ext2: Restoring..."
-				mount /sddata
-				CW2=$PWD
-				cd /sddata
-				tar -xvf $RESTOREPATH/ext2.tar ./ > /dev/null
-				cd "$CW2"
-				echo "done"
-				
-				if [ $COMPRESSED -eq 1 ]; then
-					#delete the uncompressed part
-					rm ext2.tar
-				fi
-			fi
+		echo -n "ext2: Erasing..."
+		umount /sddata 2> /dev/null
+		mkfs.ext2 -c /dev/block/mmcblk0p2 > /dev/null
+		echo "done"
+		
+		echo -n "ext2: Restoring..."
+		mount /sddata
+		CW2=$PWD
+		cd /sddata
+		tar -xvf $RESTOREPATH/ext2.tar ./ > /dev/null
+		cd "$CW2"
+		echo "done"
+		
+		if [ $COMPRESSED -eq 1 ]; then
+			#delete the uncompressed part
+			rm ext2.tar
 		fi
 	fi
 fi
