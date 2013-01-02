@@ -1,4 +1,4 @@
-#!/sbin/bash
+﻿#!/sbin/bash
 
 export PATH="$PATH:/bin:/sbin"
 
@@ -213,32 +213,13 @@ chmod -R 0644 ${ROOT}lib
 #chek linux version
 LVER=`uname -r | awk '{split($0,a,"-"); print a[1]}'`
 
-#modules
-if [ -d "/lib/modules/$LVER" ]; then
-
-	MODPATH="/lib/modules/$LVER"
-
-	#MMC-fix
-	MMCFIX_MODULE="$MODPATH/mmcfix.ko"
-	if [ -f "$MMCFIX_MODULE" ]; then		
-		insmod "$MMCFIX_MODULE"
-	fi
-
-	#ext2/3/4 partition on sdcard
-	if [ -b /dev/block/mmcblk0p2 ] && [ -f "$MODPATH/ext4.ko" ] && [ -f "$MODPATH/jbd2.ko" ] && [ -f "$MODPATH/crc16.ko" ]; then
-		mkdir /sddata
-		insmod "$MODPATH/jbd2.ko"
-		insmod "$MODPATH/crc16.ko"
-		insmod "$MODPATH/ext4.ko"
-		echo "/dev/block/mmcblk0p2          /sddata         auto            defaults        0 0" >> /etc/fstab
-		e2fsck -p /dev/block/mmcblk0p2 
-	fi
-	
-	#partitions
-	PARTITIONS_MODULE="$MODPATH/part-$1.ko"
-	if [ -f /etc/bootstrap ] && [ -f "$PARTITIONS_MODULE" ]; then		
-		insmod "$PARTITIONS_MODULE"
-	fi
+#ext2/3/4 partition on sdcard
+if [ -b /dev/block/mmcblk0p2 ]; then4
+	insmod /sdcard/OpenRecovery/lib/modules/jbd2.ko
+	insmod /sdcard/OpenRecovery/lib/modules/ext4.ko
+	mkdir /sddata
+	echo "/dev/block/mmcblk0p2          /sddata         auto            defaults        0 0" >> /etc/fstab
+	e2fsck -p /dev/block/mmcblk0p2 
 fi
 
 #res - read the theme first

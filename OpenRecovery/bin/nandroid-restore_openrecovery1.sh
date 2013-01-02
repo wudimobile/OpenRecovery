@@ -1,4 +1,4 @@
-#!/sbin/bash
+ï»¿#!/sbin/bash
 
 # $1 DIRECTORY (absolute path)
 # $2 --all (optional)
@@ -31,7 +31,7 @@ ERROR=""
 
 echo "+----------------------------------------------+"
 echo "+                                              +"
-echo "+                   »Ö¸´Ä£Ê½                   +"
+echo "+                   æ¢å¤æ¨¡å¼                   +"
 echo "+                                              +"
 echo "+----------------------------------------------+"
 sleep 2
@@ -116,7 +116,7 @@ else
 fi
 
 if [ $NOTHING -eq 1 ]; then
-	echo "E:Î´Ö´ĞĞ²Ù×÷"
+	echo "E:æœªæ‰§è¡Œæ“ä½œ"
 	exit 1
 fi
 
@@ -129,7 +129,7 @@ erase_image=`which erase_image`
 if [ "$erase_image" == "" ]; then
 	erase_image=`which erase_image-or`
 	if [ "$erase_image" == "" ]; then
-		echo "E:Î´ÕÒµ½ erase_image »ò erase_image-or."
+		echo "E:æœªæ‰¾åˆ° erase_image æˆ– erase_image-or."
 		exit 1
 	fi
 fi
@@ -138,7 +138,7 @@ flash_image=`which flash_image`
 if [ "$flash_image" == "" ]; then
 	flash_image=`which flash_image-or`
 	if [ "$flash_image" == "" ]; then
-		echo "E:Î´ÕÒµ½ flash_image »ò flash_image-or."
+		echo "E:æœªæ‰¾åˆ° flash_image æˆ– flash_image-or."
 		exit 1
 	fi
 fi
@@ -147,7 +147,7 @@ unyaffs=`which unyaffs`
 if [ "$unyaffs" == "" ]; then
 	unyaffs=`which unyaffs-or`
 	if [ "$unyaffs" == "" ]; then
-		echo "E:Î´ÕÒµ½ unyaffs »ò unyaffs-or."
+		echo "E:æœªæ‰¾åˆ° unyaffs æˆ– unyaffs-or."
 		exit 1
 	fi
 fi
@@ -160,7 +160,7 @@ if [ "$COMPRESS" == 1 ]; then
 		ENERGY=100
 	fi
 	if [ ! $ENERGY -ge 30 ]; then
-		echo "E: µçÁ¿²»×ã"      
+		echo "E: ç”µé‡ä¸è¶³"      
 		exit 1
 	fi
 fi
@@ -175,15 +175,15 @@ CWD=$PWD
 cd "$RESTOREPATH"
 
 if [ `ls *.bz2 2>/dev/null|wc -l` -ge 1 ]; then
-	echo "´Ë±¸·İ°üÎªÑ¹Ëõ´æ´¢"
+	echo "æ­¤å¤‡ä»½åŒ…ä¸ºå‹ç¼©å­˜å‚¨"
 	COMPRESSED=1
 	
 	if [ $FREEBLOCKS -le 262144 ]; then
-		echo "E: Ã»ÓĞ×ã¹»µÄ¿Õ¼äÀ´½âÑ¹±¸·İ°ü(ÖÁÉÙĞèÒª 256MB ¿Õ¼ä)"
+		echo "E: æ²¡æœ‰è¶³å¤Ÿçš„ç©ºé—´æ¥è§£å‹å¤‡ä»½åŒ…(è‡³å°‘éœ€è¦ 256MB ç©ºé—´)"
 		cd $CWD
 		exit 1
 	else
-		echo "ÇëÈ·ÈÏ SD ¿¨ÉÏÖÁÉÙÓĞ 256MB »ò¸ü´óµÄ¿Õ¼ä."
+		echo "è¯·ç¡®è®¤ SD å¡ä¸Šè‡³å°‘æœ‰ 256MB æˆ–æ›´å¤§çš„ç©ºé—´."
 	fi
 fi
 
@@ -201,42 +201,42 @@ fi
 
 for image in boot bpsw lbl logo devtree; do
 	if [ ! -f $image.img* ]; then
-		echo "${image}: ÎŞ·¨Ö´ĞĞ±¸·İ."
+		echo "${image}: æ— æ³•æ‰§è¡Œå¤‡ä»½."
 		continue
 	fi
 	
 	case $image in
 		boot)
 			if [ $REST_BOOT -eq 0 ]; then
-				echo "ÄÚºË(boot): ÒÑÌø¹ı."
+				echo "å†…æ ¸(boot): å·²è·³è¿‡."
 				continue
 			fi
 			;;
 			
 		bpsw)
 			if [ $REST_BPSW -eq 0 ]; then
-				echo "»ù´ø(bpsw): ÒÑÌø¹ı."
+				echo "åŸºå¸¦(bpsw): å·²è·³è¿‡."
 				continue
 			fi
 			;;
 			
 		lbl)
 			if [ $REST_LBL -eq 0 ]; then
-				echo "Òıµ¼(lbl): ÒÑÌø¹ı."
+				echo "å¼•å¯¼(lbl): å·²è·³è¿‡."
 				continue
 			fi
 			;;
 			
 		logo)
 			if [ $REST_LOGO -eq 0 ]; then
-				echo "±êÖ¾(logo): ÒÑÌø¹ı."
+				echo "æ ‡å¿—(logo): å·²è·³è¿‡."
 				continue
 			fi
 			;;
 			
 		devtree)
 			if [ $REST_DEVTREE -eq 0 ]; then
-				echo "devtree: ÒÑÌø¹ı."
+				echo "devtree: å·²è·³è¿‡."
 				continue
 			fi
 			;;
@@ -245,15 +245,15 @@ for image in boot bpsw lbl logo devtree; do
 	if [ $OPEN_RCVR_BKP -eq 1 ]; then  
 	
 		if [ $COMPRESSED -eq 1 ]; then
-			echo -n "${image}: ÕıÔÚ½âÑ¹..."
+			echo -n "${image}: æ­£åœ¨è§£å‹..."
 			bunzip2 -c $image.img.bz2 > $image.img
-			echo "Íê³É"
+			echo "å®Œæˆ"
 		fi
 	fi
 	
-	echo -n "${image}: ÕıÔÚ»Ö¸´..."
+	echo -n "${image}: æ­£åœ¨æ¢å¤..."
 	$flash_image $image $image.img > /dev/null 2> /dev/null
-	echo "Íê³É"
+	echo "å®Œæˆ"
 	
 	if [ $COMPRESSED -eq 1 ]; then
 		#delete the uncompressed part
@@ -268,42 +268,42 @@ done
 
 for image in system data cache cust cdrom; do
 	if [ ! -f $image.img* ]; then
-		echo "${image}: ÎŞ·¨Ö´ĞĞ±¸·İ."
+		echo "${image}: æ— æ³•æ‰§è¡Œå¤‡ä»½."
 		continue
 	fi
 	
 	case $image in
 		system)
 			if [ $REST_SYSTEM -eq 0 ]; then
-				echo "ÏµÍ³(system): ÒÑÌø¹ı."
+				echo "ç³»ç»Ÿ(system): å·²è·³è¿‡."
 				continue
 			fi
 		  ;;
 	    
 		data)
 			if [ $REST_DATA -eq 0 ]; then
-				echo "Êı¾İ(data): ÒÑÌø¹ı."
+				echo "æ•°æ®(data): å·²è·³è¿‡."
 				continue
 			fi
 			;;
 	    
 		cache)
 			if [ $REST_CACHE -eq 0 ]; then
-				echo "»º´æ(cache): ÒÑÌø¹ı."
+				echo "ç¼“å­˜(cache): å·²è·³è¿‡."
 				continue
 			fi
 			;;
 	
 		cust)
 			if [ $REST_CUST -eq 0 ]; then
-				echo "cust: ÒÑÌø¹ı."
+				echo "cust: å·²è·³è¿‡."
 				continue
 			fi
 			;;
 	
 		cdrom)
 			if [ $REST_CDROM -eq 0 ]; then
-				echo "CD-Rom: ÒÑÌø¹ı."
+				echo "CD-Rom: å·²è·³è¿‡."
 				continue
 			fi
 			;;
@@ -313,24 +313,24 @@ for image in system data cache cust cdrom; do
 	mount /$image 2> /dev/null
 	
 	if [ $? -ne 0 ]; then
-		echo "E:ÎŞ·¨¹ÒÔØ /$image."
-		echo "${image}: ÎŞ·¨»Ö¸´."
-		ERROR="${ERROR}${image}: ¹ÒÔØÊ§°Ü.\n"
+		echo "E:æ— æ³•æŒ‚è½½ /$image."
+		echo "${image}: æ— æ³•æ¢å¤."
+		ERROR="${ERROR}${image}: æŒ‚è½½å¤±è´¥.\n"
 		continue
 	fi
 	
 	if [ $OPEN_RCVR_BKP -eq 1 ]; then  
 	
 		if [ $COMPRESSED -eq 1 ]; then
-			echo -n "${image}: ÕıÔÚ½âÑ¹..."
+			echo -n "${image}: æ­£åœ¨è§£å‹..."
 			bunzip2 -c $image.img.bz2 > $image.img
-			echo "Íê³É"
+			echo "å®Œæˆ"
 		fi
 	fi
 	
 	if [ "$image" == "system" ]; then
 		if [ -d /system/persistent ]; then
-			echo -n "${image}: ÕıÔÚ±¸·İ..."
+			echo -n "${image}: æ­£åœ¨å¤‡ä»½..."
 			
 			mkdir /system_persistent > /dev/null
 			cp -a /system/persistent /system_persistent > /dev/null
@@ -340,12 +340,12 @@ for image in system data cache cust cdrom; do
 				cp -a /system/bin/sh /system_persistent/sh > /dev/null
 			fi
 			
-			echo "Íê³É"
+			echo "å®Œæˆ"
 		fi
 	fi
 	
 	umount /$image 2> /dev/null
-	echo -n "${image}: ÕıÔÚÉ¾³ı..."
+	echo -n "${image}: æ­£åœ¨åˆ é™¤..."
 	
 	if [ "$image" == "data" ]; then
 		my_image="userdata"
@@ -354,15 +354,15 @@ for image in system data cache cust cdrom; do
 	fi
 		
 	$erase_image $my_image > /dev/null 2> /dev/null
-	echo "Íê³É"
+	echo "å®Œæˆ"
 	mount /$image
-	echo -n "${image}: ÕıÔÚ»Ö¸´..."
+	echo -n "${image}: æ­£åœ¨æ¢å¤..."
 	$unyaffs $image.img /$image	> /dev/null 2> /dev/null
-	echo "Íê³É"
+	echo "å®Œæˆ"
 	
 	if [ "$image" == "system" ]; then
 		if [ -d /system_persistent ]; then
-			echo -n "${image}: ÕıÔÚ»Ö¸´..."
+			echo -n "${image}: æ­£åœ¨æ¢å¤..."
 			
 			if [ -d /system/persistent ]; then
 				rm -r /system/persistent > /dev/null
@@ -378,7 +378,7 @@ for image in system data cache cust cdrom; do
 			
 			rm -r /system_persistent > /dev/null
 			
-			echo "Íê³É"
+			echo "å®Œæˆ"
 		fi
 	fi
 	
@@ -394,61 +394,31 @@ done
 #===============================================================================
 
 if [ ! -f ext2.tar ]; then
-	echo "SD ¿¨·ÖÇø(ext2): ÎŞ·¨Ö´ĞĞ±¸·İ."
+	echo "SD å¡åˆ†åŒº(ext2): æ— æ³•æ‰§è¡Œå¤‡ä»½."
 else 
 	if [ $REST_EXT2 -eq 0 ]; then
-		echo "SD ¿¨·ÖÇø(ext2): ÒÑÌø¹ı."
+		echo "SD å¡åˆ†åŒº(ext2): å·²è·³è¿‡."
 	elif [ ! -d /sddata ]; then
-		echo "E: Î´ÕÒµ½ SD ¿¨·ÖÇø(ext2)"
-		echo "SD ¿¨·ÖÇø(ext2): ÎŞ·¨»Ö¸´."
-		ERROR="${ERROR}SD ¿¨·ÖÇø(ext2): ÎŞ·¨»Ö¸´²»´æÔÚµÄ·ÖÇø.\n"
-	else	
-		if [ ! -f ext2.md5 ]; then
-			echo "Î´ÕÒµ½ SD ¿¨·ÖÇø(ext2)Ğ£ÑéÎÄ¼ş, ÒÑÌø¹ı."		
-			
-			if [ $COMPRESSED -eq 1 ]; then
-				#delete the uncompressed part
-				rm ext2.tar
-			fi
-			
-			ERROR="${ERROR}SD ¿¨·ÖÇø(ext2): Î´·¢ÏÖ MD5 Ğ£ÑéÎÄ¼ş.\n"
-			
-		else
-					
-			echo -n "SD ¿¨·ÖÇø(ext2): ÕıÔÚĞ£Ñé MD5..."
-			md5sum -c ext2.md5 > /dev/null
-			
-			if [ $? -eq 1 ]; then
-				echo "Ğ£ÑéÊ§°Ü"
-				echo "SD ¿¨·ÖÇø(ext2)Ğ£ÑéÖµ²»Æ¥Åä, ÒÑÌø¹ı."
-				
-				if [ $COMPRESSED -eq 1 ]; then
-					#delete the uncompressed part
-					rm ext2.tar
-				fi
-				
-				ERROR="${ERROR}SD ¿¨·ÖÇø(ext2): MD5 Öµ²»Æ¥Åä.\n"
-				
-			else
-				echo "Íê³É"
-				echo -n "SD ¿¨·ÖÇø(ext2): ÕıÔÚÉ¾³ı..."
-				umount /sddata 2> /dev/null
-				mkfs.ext2 -c /dev/block/mmcblk0p2 > /dev/null
-				echo "Íê³É"
-				
-				echo -n "SD ¿¨·ÖÇø(ext2): ÕıÔÚ»Ö¸´..."
-				mount /sddata
-				CW2=$PWD
-				cd /sddata
-				tar -xvf $RESTOREPATH/ext2.tar ./ > /dev/null
-				cd "$CW2"
-				echo "Íê³É"
-				
-				if [ $COMPRESSED -eq 1 ]; then
-					#delete the uncompressed part
-					rm ext2.tar
-				fi
-			fi
+		echo "E: æœªæ‰¾åˆ° SD å¡åˆ†åŒº(ext2)"
+		echo "SD å¡åˆ†åŒº(ext2): æ— æ³•æ¢å¤."
+		ERROR="${ERROR}SD å¡åˆ†åŒº(ext2): æ— æ³•æ¢å¤ä¸å­˜åœ¨çš„åˆ†åŒº.\n"
+	else
+		echo -n "SD å¡åˆ†åŒº(ext2): æ­£åœ¨åˆ é™¤..."
+		umount /sddata 2> /dev/null
+		mkfs.ext2 -c /dev/block/mmcblk0p2 > /dev/null
+		echo "å®Œæˆ"
+		
+		echo -n "SD å¡åˆ†åŒº(ext2): æ­£åœ¨æ¢å¤..."
+		mount /sddata
+		CW2=$PWD
+		cd /sddata
+		tar -xvf $RESTOREPATH/ext2.tar ./ > /dev/null
+		cd "$CW2"
+		echo "å®Œæˆ"
+		
+		if [ $COMPRESSED -eq 1 ]; then
+			#delete the uncompressed part
+			rm ext2.tar
 		fi
 	fi
 fi
@@ -461,14 +431,14 @@ cd "$CWD"
 if [ "$ERROR" != "" ]; then
 	echo "+----------------------------------------------+"
 	echo "+                                              +"
-	echo "+                 »Ö¸´ÖĞµÄ´íÎó                 +"
+	echo "+                 æ¢å¤ä¸­çš„é”™è¯¯                 +"
 	echo "+                                              +"
 	echo "+----------------------------------------------+"
 	
 	printf "$ERROR"
 	
 else
-	echo "»Ö¸´³É¹¦."
+	echo "æ¢å¤æˆåŠŸ."
 	
 	if [ $REBOOT -eq 1 ]; then
 		reboot
